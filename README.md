@@ -1,4 +1,4 @@
-# reader-app
+# zhihudailyapp
 
 > A Vue.js project
 
