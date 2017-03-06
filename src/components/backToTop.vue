@@ -7,8 +7,6 @@
 <script>
 export default {
 	name: 'BackToTop',
-	components: {
-	}
 }
 </script>
 

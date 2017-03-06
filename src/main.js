@@ -5,10 +5,12 @@ import router from './router/index.js'
 import VueResource from 'vue-resource'
 import store from './vuex/store.js'
 Vue.use(VueResource)
+
+//日期全局过滤器
 Vue.filter("formatDate", function (value) {
   var _week = new Date()
   _week.setFullYear(parseInt(value.substr(0,4)))
-  _week.setMonth(parseInt(value.substr(4,2)-1))
+  _week.setMonth(parseInt(value.substr(4,2)-1)) //月份从0开始计算
   _week.setDate(parseInt(value.substr(6,2)))
   // console.log(value.substr(0,4),value.substr(4,2),value.substr(6,2),_week)
   var weekday=new Array(7)

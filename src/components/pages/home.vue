@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<swiper   loop dots-position='center' height="180px" :aspect-ratio="650/650">
+		<swiper auto loop dots-position='center' height="180px" :aspect-ratio="650/650">
 			<div v-for='list in DONE_NEWS_LIST_ROOT'>
 				<swiper-item v-for='item in list.top_stories' >
 					<img :src="url + item.image" class="crousel-img">
@@ -13,6 +13,7 @@
 				<p class="data-mark">{{list.date | formatDate}}</p>
 	        </sticky>
 			<router-link :to="{name:'newsdetail',params:{id:item.id}}" class="weui-media-box weui-media-box_appmsg" v-for='item in list.stories'>
+			<!-- 这里的classname 直接从vux上拿过来的，属于panel的样式 -->
 				<div class="weui-media-box__hd">
 					<img :src="url+item.images[0]" class="weui-media-box__thumb">
 				</div>
@@ -33,12 +34,7 @@
 	export default {
 		data(){
 			return {
-				type: '2',
 				url:'http://lovestreet.leanapp.cn/zhihu/resource?url=',
-			    footer: {
-			        title: '查看更多',
-			        url: 'http://vux.li'
-			    },
 			    backBtnShow : false
 			}
 		},
