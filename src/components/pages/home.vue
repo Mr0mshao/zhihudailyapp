@@ -1,10 +1,12 @@
 <template>
 	<div>
-		<swiper auto loop dots-position='center' height="180px" :aspect-ratio="650/650">
+		<swiper  loop dots-position='center' height="180px" :aspect-ratio="650/650">
 			<div v-for='list in DONE_NEWS_LIST_ROOT'>
 				<swiper-item v-for='item in list.top_stories' >
-					<img :src="url + item.image" class="crousel-img">
-					<p style="margin: 0;padding: 13px 5px 5px 5px;text-align: center;font-size: 12px;">{{item.title}}</p>
+					<router-link :to="{name:'newsdetail',params:{id:item.id}}">
+						<img :src="url + item.image" class="crousel-img">
+						<p class="img-info">{{item.title}}</p>
+					</router-link>
 				</swiper-item>
 			</div>
 		</swiper>
@@ -61,11 +63,13 @@
 			setInterval(function(){
 				if(window.scrollY > 650){
 					_this.backBtnShow = true
+				}else{
+					_this.backBtnShow = false
 				}
 			},500)
 		},
 		computed: {
-			...mapGetters(['DONE_NEWS_LATEST','DONE_NEWS_LIST_ROOT','DONE_LOADING_ONE']),
+			...mapGetters(['DONE_NEWS_LATEST','DONE_NEWS_LIST_ROOT','DONE_LOADING']),
 		},
 	}	
 
@@ -84,5 +88,9 @@
 		font-size: 14px;
 		color: #fff;
 		letter-spacing:5px
+	}
+	.img-info{
+		margin: 0;padding: 13px 5px 5px 5px;text-align: center;font-size: 12px;
+		color:#333;
 	}
 </style>

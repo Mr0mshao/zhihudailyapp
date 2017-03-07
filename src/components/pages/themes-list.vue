@@ -1,6 +1,5 @@
 <template>
 	<div>
-		<loading v-show='DONE_LOADING_TWO'></loading>
 		<div style="margin: 10px;overflow: hidden;" v-for="item in DONE_THEMES.others">
 	      <router-link :to="{name:'themesdetail',params:{id:item.id}}">
 			<masker style="border-radius: 2px;">
@@ -18,7 +17,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { Group,Cell,Loading,Masker } from 'vux'	
+import { Group,Cell,Masker } from 'vux'	
 export default{
 	name : 'Themes',
 	data(){
@@ -26,9 +25,9 @@ export default{
 			url:'http://lovestreet.leanapp.cn/zhihu/resource?url=',
 		}
 	},
-	components:{ Group,Cell,Loading,Masker},
+	components:{ Group,Cell,Masker},
 	computed:{
-		...mapGetters(['DONE_THEMES','DONE_LOADING_TWO'])
+		...mapGetters(['DONE_THEMES','DONE_LOADING'])
 	},
 	mounted(){
 	},

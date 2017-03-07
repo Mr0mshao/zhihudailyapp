@@ -1,6 +1,5 @@
 <template>
 	<div>
-		<loading v-show='DONE_LOADING_TWO'></loading>
 		<div style="margin: 10px;overflow: hidden;">	<masker style="border-radius: 2px;">
 		        <div class="m-img" :style="{backgroundImage:'url('+ url+DONE_THEMES_LIST.image +')'}"></div>
 		        <div slot="content" class="m-title">
@@ -25,7 +24,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { Loading,Masker,Panel } from 'vux'	
+import { Masker,Panel } from 'vux'	
 export default{
 	name : 'Themes',
 	data(){
@@ -33,9 +32,9 @@ export default{
 			url:'http://lovestreet.leanapp.cn/zhihu/resource?url=',
 		}
 	},
-	components:{Loading,Masker,Panel},
+	components:{Masker,Panel},
 	computed:{
-		...mapGetters(['DONE_THEMES_LIST','DONE_LOADING_TWO'])
+		...mapGetters(['DONE_THEMES_LIST','DONE_LOADING'])
 	},
 	created(){
 		this.$store.dispatch('FETCH_THEMES_list', this.$route.params.id)

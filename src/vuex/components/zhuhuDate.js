@@ -6,8 +6,7 @@ const state = {
     NewsListRoot: [],
     NewsLatest: {},
     time: moment(),
-    LoadingOne: false,
-    LoadingTwo: true,
+    Loading: true,
     NewsDetail: {},
     Themes: {},
     ThemesList: {}
@@ -20,14 +19,11 @@ const getters = {
     [types.DONE_NEWS_LATEST]: state => {
         return state.NewsLatest
     },
-    [types.DONE_LOADING_ONE]: state => {
-        return state.LoadingOne
-    },
     [types.DONE_NEWS_DETAIL]: state => {
         return state.NewsDetail
     },
-    [types.DONE_LOADING_TWO]: state => {
-        return state.LoadingTwo
+    [types.DONE_LOADING]: state => {
+        return state.Loading
     },
     [types.DONE_THEMES]: state => {
         return state.Themes
@@ -41,12 +37,12 @@ const mutations = {
     [types.TOGGLE_NEWS_LATEST](state, all) {
         state.NewsListRoot.push(all)
         state.NewsLatest = all
-        state.LoadingTwo = false
+        state.Loading = false
     },
     [types.TOGGLE_NEWS_LATEST_MORE](state, all) {
         state.NewsListRoot.push(all)
         state.time.subtract(1, "days")
-        state.LoadingOne = false
+        state.Loading = false
     },
     [types.TOGGLE_NEWS_DETAIL](state, all) {
         String.prototype.replaceAll = function (s1, s2) {
@@ -54,26 +50,23 @@ const mutations = {
         }
         all.body = all.body.replaceAll('src=\"', 'src=\"http://lovestreet.leanapp.cn/zhihu/resource?url=')
         all.body = all.body.replaceAll('<div class=\"img-place-holder\"></div>', '')
-        state.NewsDetail = all
-        state.LoadingTwo = false
+        state.NewsDetail = all.body
+        state.Loading = false
     },
     [types.TOGGLE_THEMES](state, all) {
         state.Themes = all
-        state.LoadingTwo = false
+        state.Loading = false
     },
     [types.TOGGLE_THEMES_LIST](state, all) {
         state.ThemesList = all
-        state.LoadingTwo = false
+        state.Loading = false
     },
-    [types.EMPTY](state){
-    	state.NewsListRoot = []
-    }
 }
 
 const actions = {
     // 获取首页消息列表
     [types.FECTH_NEWS_LATEST]({commit}) {
-        state.LoadingTwo = true
+        state.Loading = true
         axios.get('http://lovestreet.leanapp.cn/zhihu/news/latest')
             .then(res => {
                 commit(types.TOGGLE_NEWS_LATEST, res.data)
@@ -81,16 +74,16 @@ const actions = {
     },
     // 首页下方按钮点击加载更多消息
     [types.FECTH_NEWS_LATEST_MORE]({commit}) {
-        state.LoadingOne = true
-        var now = state.time.format("YYYYMMDD")
-        axios.get('http://lovestreet.leanapp.cn/zhihu/before/' + now)
+        state.Loading = true
+        var _now = state.time.format("YYYYMMDD")
+        axios.get('http://lovestreet.leanapp.cn/zhihu/before/' + _now)
             .then(res => {
                 commit(types.TOGGLE_NEWS_LATEST_MORE, res.data)
             }).catch(err => console.log(err))
     },
     // 获取信息详情
     [types.FETCH_NEWS_DETAIL]({commit}, id) {
-        state.LoadingTwo = true
+        state.Loading = true
         axios.get('http://lovestreet.leanapp.cn/zhihu/news/' + id)
             .then(res => {
                 commit(types.TOGGLE_NEWS_DETAIL, res.data)
@@ -98,7 +91,7 @@ const actions = {
     },
     // 获取日报主题
     [types.FETCH_THEMES]({commit}) {
-        state.LoadingTwo = true
+        state.Loading = true
         axios.get('http://lovestreet.leanapp.cn/zhihu/themes')
             .then(res => {
                 commit(types.TOGGLE_THEMES, res.data)
@@ -106,20 +99,12 @@ const actions = {
     },
     // 获取主题条目列表
     [types.FETCH_THEMES_list]({commit}, id) {
-        state.LoadingTwo = true
+        state.Loading = true
         axios.get('http://lovestreet.leanapp.cn/zhihu/themes/' + id)
             .then(res => {
                 commit(types.TOGGLE_THEMES_LIST, res.data)
             }).catch(err => console.log(err))
     }
-    // // NewsListRoot: [],
-    // [types.FETCH_THEMES_list]({commit}, id) {
-    //     state.LoadingTwo = true
-    //     axios.get('http://lovestreet.leanapp.cn/zhihu/themes/' + id)
-    //         .then(res => {
-    //             commit(types.TOGGLE_THEMES_LIST, res.data)
-    //         }).catch(err => console.log(err))
-    // }
 }
 
 export default {

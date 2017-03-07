@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div v-html="DONE_NEWS_DETAIL.body"></div>
+		<div v-html="DONE_NEWS_DETAIL"></div>
 	</div>
 </template>
 
@@ -9,7 +9,7 @@
 	export default {
 		name : 'newsdetail',
 		computed:{
-			...mapGetters(['DONE_NEWS_DETAIL','DONE_LOADING_ONE'])
+			...mapGetters(['DONE_NEWS_DETAIL','DONE_LOADING'])
 		},
 		created: function() {
 		this.$store.dispatch('FETCH_NEWS_DETAIL', this.$route.params.id)

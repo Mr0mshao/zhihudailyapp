@@ -2,7 +2,7 @@
   <div id="app">
   	<layoutHeader></layoutHeader>
     <router-view></router-view>
-	<loading v-show="DONE_LOADING_TWO"></loading>
+	<loading v-show="DONE_LOADING"></loading>
   </div>
 </template>
 
@@ -28,7 +28,7 @@ export default {
   mounted () {
   },
   computed: {
-      ...mapGetters(['DONE_LOADING_TWO'])
+      ...mapGetters(['DONE_LOADING'])
     },
 }
 </script>
